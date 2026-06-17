@@ -1,5 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import logo from "../../../assets/Codebyshamroza.png";
+import extension from "../../../assets/customExtension.png";
+import customwidget from "../../../assets/StoreLocatorWidget.png";
+import ghlActions from "../../../assets/ghlactions.png";
+import automations from "../../../assets/automations.png";
+import customwebsites from "../../../assets/websites.jpg";
 
 /* ============================================================
    GLOBAL STYLES injected into <head> via a style tag
@@ -92,7 +97,12 @@ const GlobalStyles = () => (
     }
     .section-label::before { content:''; width:20px; height:2px; background:var(--accent); }
     .section-title { font-size:clamp(2rem,4vw,3rem); font-weight:800; margin-bottom:16px; }
-    .section-sub   { color:var(--text-secondary); max-width:560px; font-size:1.05rem; }
+    .section-sub   { color: var(--text-secondary);
+    max-width: 560px;
+    font-size: 1.05rem;
+    text-align: center;
+    align-items: center;
+    display: contents; }
     .section-header{ margin-bottom:60px; }
 
     /* ---------- Buttons ---------- */
@@ -223,9 +233,9 @@ const GlobalStyles = () => (
       font-size:.82rem; font-weight:600; color:var(--text-primary);
       backdrop-filter:blur(10px); z-index:3; box-shadow:0 8px 40px rgba(0,0,0,.5); }
     .tech-badge i { color:var(--accent-bright); }
-    .tb1 { top:8%;  right:-20px; animation:float 5s ease-in-out infinite .5s; }
-    .tb2 { bottom:18%; left:-30px; animation:float 7s ease-in-out infinite 1s; }
-    .tb3 { top:48%; right:-40px; animation:float 6s ease-in-out infinite 1.5s; }
+    .tb1 { top:8%;  right:-77px; animation:float 5s ease-in-out infinite .5s; }
+    .tb2 { bottom:41%; left:-177px; animation:float 7s ease-in-out infinite 1s; }
+    .tb3 { top:48%; right:-153px; animation:float 6s ease-in-out infinite 1.5s; }
     .scroll-indicator { display:flex; flex-direction:column; align-items:center; gap:8px;
       color:var(--text-muted); font-size:.75rem; letter-spacing:.1em;
       text-transform:uppercase; margin-top:60px; animation:fadeIn 1s ease 1s both; }
@@ -285,6 +295,23 @@ const GlobalStyles = () => (
     .proj-img { position:relative; height:200px; overflow:hidden; background:var(--bg-secondary); }
     .proj-placeholder { width:100%;height:100%; display:flex; align-items:center;
       justify-content:center; font-size:3rem; }
+      .proj-placeholder {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.proj-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.proj-card:hover .proj-image {
+  transform: scale(1.05);
+}
     .proj-overlay { position:absolute; inset:0; background:rgba(0,0,0,.5);
       display:flex; align-items:center; justify-content:center; gap:12px;
       opacity:0; transition:opacity var(--transition); }
@@ -296,6 +323,46 @@ const GlobalStyles = () => (
     .stack-tag  { background:rgba(124,109,240,.1); border:1px solid rgba(124,109,240,.2);
       color:var(--accent-bright); padding:3px 10px; border-radius:6px; font-size:.75rem; font-weight:600; }
     .proj-links { display:flex; gap:10px; }
+
+    .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  position: relative;
+  background: #111;
+  padding: 10px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+}
+
+.modal-content img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 7px;
+  right: 5px;
+  background: crimson;
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 6px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
 
     /* ---------- Services ---------- */
     .services-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
@@ -499,9 +566,9 @@ function Navbar({ theme, toggleTheme }) {
   }, []);
 
   const close = () => { setMenuOpen(false); document.body.style.overflow = ""; };
-  const open  = () => { setMenuOpen(true);  document.body.style.overflow = "hidden"; };
+  const open = () => { setMenuOpen(true); document.body.style.overflow = "hidden"; };
 
-  const links = ["about","skills","projects","services","contact"];
+  const links = ["about", "skills", "projects", "services", "contact"];
 
   return (
     <>
@@ -514,7 +581,7 @@ function Navbar({ theme, toggleTheme }) {
             </a>
             <ul className="nav-links">
               {links.map((l) => (
-                <li key={l}><a href={`#${l}`}>{l.charAt(0).toUpperCase()+l.slice(1)}</a></li>
+                <li key={l}><a href={`#${l}`}>{l.charAt(0).toUpperCase() + l.slice(1)}</a></li>
               ))}
             </ul>
             <div className="nav-actions">
@@ -533,7 +600,7 @@ function Navbar({ theme, toggleTheme }) {
         <button id="close-menu" onClick={close}><i className="fa-solid fa-xmark"></i></button>
         {links.map((l) => (
           <a key={l} href={`#${l}`} onClick={close}>
-            {l.charAt(0).toUpperCase()+l.slice(1)}
+            {l.charAt(0).toUpperCase() + l.slice(1)}
           </a>
         ))}
       </div>
@@ -579,9 +646,9 @@ function Hero() {
             </div>
 
             <p className="hero-desc">
-              Building fast, scalable, and reliable backends that power exceptional
-              web experiences. Specialized in Node.js APIs, MongoDB, and seamless
-              third-party integrations.
+              Building fast, scalable, and efficient web applications using MongoDB, <br />
+              Express.js, React.js, and Node.js. Focused on creating powerful REST APIs, smooth <br />
+              user interfaces, and reliable backend systems with clean, maintainable code.
             </p>
 
             <div className="hero-cta">
@@ -624,12 +691,12 @@ function Hero() {
 /* ----- About ----- */
 function About() {
   const stats = [
-    { n: "2+",  l: "Years Coding" },
+    { n: "3+", l: "Years Coding" },
     { n: "10+", l: "Projects Built" },
-    { n: "5+",  l: "APIs Integrated" },
-    { n: "∞",   l: "Lines of Code" },
+    { n: "30+", l: "Third party Integrations of apps" },
+    { n: "∞", l: "Lines of Code" },
   ];
-  const tags = ["Backend Dev","REST APIs","MongoDB","Node.js","Express.js","React","Automation","Open Source"];
+  const tags = [ "REST APIs", "MongoDB", "Node.js", "Express.js", "React", "Automation", "Open Source", "frameworks: Bootstrap, Tailwind CSS, Vite etc"];
 
   return (
     <section id="about" className="section" style={{ background: "var(--bg-secondary)" }}>
@@ -639,25 +706,29 @@ function About() {
           {/* Left — card + stats */}
           <div className="reveal-left">
             <div className="about-card">
-              <div style={{ textAlign:"center", marginBottom:24 }}>
+              <div style={{ textAlign: "center", marginBottom: 24 }}>
                 <div style={{
-                  width:100, height:100, borderRadius:"50%",
-                  background:"linear-gradient(135deg,var(--accent-dim),var(--bg-secondary))",
-                  border:"3px solid var(--border)", display:"inline-flex",
-                  alignItems:"center", justifyContent:"center",
-                  fontFamily:"'Syne',sans-serif", fontSize:"2.5rem", fontWeight:800,
-                  color:"var(--accent-bright)"
+                  width: 100, height: 100, borderRadius: "50%",
+                  background: "linear-gradient(135deg,var(--accent-dim),var(--bg-secondary))",
+                  border: "3px solid var(--border)", display: "inline-flex",
+                  alignItems: "center", justifyContent: "center",
+                  fontFamily: "'Syne',sans-serif", fontSize: "2.5rem", fontWeight: 800,
+                  color: "var(--accent-bright)"
                 }}>SM</div>
               </div>
-              <p style={{ textAlign:"center", color:"var(--text-muted)", fontSize:".82rem",
-                textTransform:"uppercase", letterSpacing:".1em", marginBottom:4 }}>Software Engineer</p>
-              <p style={{ textAlign:"center", color:"var(--accent-bright)", fontWeight:700,
-                fontSize:"1.1rem", fontFamily:"'Syne',sans-serif" }}>Shamroza Malik</p>
+              <p style={{
+                textAlign: "center", color: "var(--text-muted)", fontSize: ".82rem",
+                textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 4
+              }}>Software Engineer</p>
+              <p style={{
+                textAlign: "center", color: "var(--accent-bright)", fontWeight: 700,
+                fontSize: "1.1rem", fontFamily: "'Syne',sans-serif"
+              }}>Shamroza Malik</p>
             </div>
 
             <div className="about-stats">
               {stats.map((s, i) => (
-                <div key={s.l} className={`stat-box reveal d${i+1}`}>
+                <div key={s.l} className={`stat-box reveal d${i + 1}`}>
                   <span className="stat-number">{s.n}</span>
                   <span className="stat-label">{s.l}</span>
                 </div>
@@ -666,38 +737,44 @@ function About() {
           </div>
 
           {/* Right — text */}
+          {/* Right — text */}
           <div className="about-text reveal">
             <div className="section-label">About Me</div>
-            <h2 className="section-title">Crafting Backends That Scale</h2>
+
+            <h2 className="section-title">
+              Crafting Full-Stack Digital Experiences
+            </h2>
+
             <p>
-              Hi! I'm <span className="about-hi">Shamroza Malik</span>, a passionate
-              Software Engineering student with a backend-first mindset. I love
-              architecting robust server-side systems that are clean, efficient, and ready to scale.
+              Hi! I'm <span className="about-hi">Shamroza Falak</span>, a MERN Stack Developer and Software Engineering student
+              focused on building complete digital solutions—from scalable web applications to Chrome extensions and custom UI widgets.
             </p>
+
             <p>
-              My core stack revolves around <span className="about-hi">Node.js + Express</span> for
-              building RESTful &amp; GraphQL APIs, <span className="about-hi">MongoDB</span> for
-              flexible data modelling, and <span className="about-hi">React</span> when the frontend
-              calls for it. Particularly drawn to <span className="about-hi">third-party integrations</span>—
-              payment gateways, webhooks, cloud services, and automation pipelines.
+              My core stack includes <span className="about-hi">Node.js + Express</span> for backend development,
+              <span className="about-hi">MongoDB</span> for flexible data modeling, and <span className="about-hi">React</span> for modern, responsive user interfaces.
+              I also enjoy working on <span className="about-hi">third-party integrations</span> such as payment gateways, webhooks, cloud services, and automation workflows, along with experience in <span className="about-hi">GoHighLevel (GHL)</span>.
             </p>
+
             <p>
-              Outside of code, I'm always experimenting with new technologies and contributing
-              to meaningful side projects. My goal is to join a forward-thinking team where I can
-              grow, contribute, and help ship products that matter.
+              Outside of development, I enjoy experimenting with new technologies and building side projects like Chrome extensions and custom widgets.
+              My goal is to join a forward-thinking team where I can grow, contribute, and help build impactful products.
             </p>
 
             <div className="tags-wrap">
-              {tags.map((t) => <span key={t} className="tag">{t}</span>)}
+              {tags.map((t) => (
+                <span key={t} className="tag">{t}</span>
+              ))}
             </div>
 
-            <div style={{ marginTop:32, display:"flex", gap:12, flexWrap:"wrap" }}>
+            <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
               <a href="#contact" className="btn btn-primary">
                 <i className="fa-solid fa-paper-plane"></i> Hire Me
               </a>
-              <a href="#" className="btn btn-ghost" download>
+
+              {/* <a href="#" className="btn btn-ghost" download>
                 <i className="fa-solid fa-download"></i> Download CV
-              </a>
+              </a> */}
             </div>
           </div>
         </div>
@@ -709,22 +786,34 @@ function About() {
 /* ----- Skills ----- */
 function Skills() {
   const cards = [
-    { icon:"fa-brands fa-react",    color:"#61dafb", name:"React.js",        cat:"Frontend Framework",
-      bars:[{l:"Component Design & State Mgmt",w:80},{l:"React Router & Hooks",w:85}] },
-    { icon:"fa-brands fa-node-js",  color:"#68a063", name:"Node.js",         cat:"Runtime Environment",
-      bars:[{l:"REST API Development",w:90},{l:"Auth & Middleware",w:88}] },
-    { icon:"fa-solid fa-server",    color:"#f5a623", name:"Express.js",      cat:"Web Framework",
-      bars:[{l:"Routing & Controllers",w:92},{l:"Error Handling & Validation",w:87}] },
-    { icon:"fa-solid fa-database",  color:"#4db33d", name:"MongoDB",         cat:"NoSQL Database",
-      bars:[{l:"Schema Design & Mongoose",w:88},{l:"Aggregation & Indexing",w:78}] },
-    { icon:"fa-solid fa-plug",      color:"#ff6b35", name:"API Integration", cat:"Third-Party Services",
-      bars:[{l:"Payment & Auth APIs",w:85},{l:"Webhooks & Cloud APIs",w:82}] },
-    { icon:"fa-brands fa-git-alt",  color:"#e44d26", name:"Tools & DevOps",  cat:"Workflow",
-      bars:[{l:"Git & GitHub",w:90},{l:"Docker & Deployment",w:65}] },
+    {
+      icon: "fa-brands fa-react", color: "#61dafb", name: "React.js", cat: "Frontend Framework",
+      bars: [{ l: "Component Design & State Mgmt", w: 80 }, { l: "React Router & Hooks", w: 85 }]
+    },
+    {
+      icon: "fa-brands fa-node-js", color: "#68a063", name: "Node.js", cat: "Runtime Environment",
+      bars: [{ l: "REST API Development", w: 90 }, { l: "Auth & Middleware", w: 88 }]
+    },
+    {
+      icon: "fa-solid fa-server", color: "#f5a623", name: "Express.js", cat: "Web Framework",
+      bars: [{ l: "Routing & Controllers", w: 92 }, { l: "Error Handling & Validation", w: 87 }]
+    },
+    {
+      icon: "fa-solid fa-database", color: "#4db33d", name: "MongoDB", cat: "NoSQL Database",
+      bars: [{ l: "Schema Design & Mongoose", w: 88 }, { l: "Aggregation & Indexing", w: 78 }]
+    },
+    {
+      icon: "fa-solid fa-plug", color: "#ff6b35", name: "API Integration", cat: "Third-Party Services",
+      bars: [{ l: "Payment & Auth APIs", w: 85 }, { l: "Webhooks & Cloud APIs", w: 82 }]
+    },
+    {
+      icon: "fa-brands fa-git-alt", color: "#e44d26", name: "Tools & DevOps", cat: "Workflow",
+      bars: [{ l: "Git & GitHub", w: 90 }, { l: "Docker & Deployment", w: 65 }]
+    },
   ];
 
   return (
-    <section id="skills" className="section" style={{ background:"var(--bg-primary)" }}>
+    <section id="skills" className="section" style={{ background: "var(--bg-primary)" }}>
       <div className="container">
         <div className="section-header reveal">
           <div className="section-label">Skills</div>
@@ -734,7 +823,7 @@ function Skills() {
 
         <div className="skills-grid">
           {cards.map((c, i) => (
-            <div key={c.name} className={`skill-card reveal d${(i%3)+1}`}>
+            <div key={c.name} className={`skill-card reveal d${(i % 3) + 1}`}>
               <div className="skill-head">
                 <div className="skill-icon" style={{ color: c.color }}>
                   <i className={c.icon}></i>
@@ -762,29 +851,60 @@ function Skills() {
 
 /* ----- Projects ----- */
 function Projects() {
+  const [selectedImage, setSelectedImage] = useState(null);
   const projects = [
-    { emoji:"🛒", bg:"linear-gradient(135deg,#1a1a2e,#16213e)", title:"ShopAPI — E-Commerce Backend",
-      desc:"A production-ready RESTful API for an e-commerce platform with full auth (JWT + refresh tokens), Stripe payment integration, order management, and admin dashboard endpoints.",
-      stack:["Node.js","Express","MongoDB","Stripe API","JWT"] },
-    { emoji:"💬", bg:"linear-gradient(135deg,#0d2137,#0a3d62)", title:"ChatFlow — Real-Time Messaging",
-      desc:"A real-time chat application supporting private rooms, group messaging, file sharing, and online presence indicators. Built with Socket.io for bidirectional communication.",
-      stack:["React","Node.js","Socket.io","MongoDB","Cloudinary"] },
-    { emoji:"🤖", bg:"linear-gradient(135deg,#1a0a2e,#2d1b4e)", title:"AutoBot — Workflow Automation",
-      desc:"A no-code automation engine inspired by Zapier. Users connect triggers and actions across third-party apps via an intuitive interface.",
-      stack:["Node.js","Express","Google APIs","Slack API","Webhooks"] },
-    { emoji:"📊", bg:"linear-gradient(135deg,#0a1a0a,#133613)", title:"TaskMaster — Project Management API",
-      desc:"A robust project & task management REST API with role-based access control, team collaboration, deadline tracking, and email notification pipelines.",
-      stack:["Express","MongoDB","RBAC","Nodemailer","Cron"] },
-    { emoji:"🏥", bg:"linear-gradient(135deg,#1a1000,#3d2800)", title:"MediSync — Clinic Management",
-      desc:"Full-stack clinic management platform handling patient records, appointment scheduling, prescription generation, and billing — with separate doctor and patient portals.",
-      stack:["React","Node.js","MongoDB","PDF Gen","JWT"] },
-    { emoji:"🔗", bg:"linear-gradient(135deg,#1a0a00,#3d1400)", title:"LinkVault — URL Shortener & Analytics",
-      desc:"A smart URL shortening service with click analytics, custom aliases, QR code generation, geo-tracking, and an embeddable analytics dashboard.",
-      stack:["Node.js","Express","Redis","MongoDB","Chart.js"] },
+    {
+      img: customwidget,
+      bg: "linear-gradient(135deg,#1a1a2e,#16213e)",
+      title: "Editable UI Widget",
+      desc: "A customizable widget that allows users to modify content, colors, and layout in real time. Designed for flexibility and user control, making it ideal for dynamic and personalized web interfaces.",
+      stack: ["React.js", "MongoDB", "Node.js", "HTML/CSS/JS"],
+      github: "https://github.com/shamrozamalik2",
+    },
+    {
+      img: extension,
+      bg: "linear-gradient(135deg,#0d2137,#0a3d62)",
+      title: "Custom Chrome Extensions",
+      desc: "Development of fully functional Chrome extensions tailored to user needs, including automation tools, UI enhancements, and workflow optimization features with real-world usability.",
+      stack: ["JavaScript", "Chrome APIs", "HTML/CSS", "Node.js"],
+      github: "https://github.com/shamrozamalik2",
+    },
+    {
+      img: ghlActions,
+      bg: "linear-gradient(135deg,#1a0a2e,#2d1b4e)",
+      title: "GoHighLevel (GHL) Integrations & Apps",
+      desc: "Providing custom GoHighLevel solutions including workflow automation, third-party integrations, and custom app development to streamline business processes and improve efficiency.",
+      stack: ["Node.js", "APIs", "Webhooks", "GHL", "Automation"],
+      github: "https://github.com/shamrozamalik2",
+    },
+    {
+      img: automations,
+      bg: "linear-gradient(135deg,#0a1a0a,#133613)",
+      title: "GHL Automation Expert",
+      desc: "Expert in building advanced automation workflows in GoHighLevel, including triggers, campaigns, pipelines, and CRM automation to optimize marketing and sales operations.",
+      stack: ["GHL", "Automation", "CRM", "Workflows", "Zapier"],
+      github: "https://github.com/shamrozamalik2",
+    },
+    {
+      img: customwebsites,
+      bg: "linear-gradient(135deg,#1a1000,#3d2800)",
+      title: "Custom Website Development",
+      desc: "Offering custom website solutions including business websites, e-commerce platforms, and responsive web applications tailored to client requirements and modern UI/UX standards.",
+      stack: ["React", "Node.js", "MongoDB", "E-commerce", "UI/UX"],
+      github: "https://github.com/shamrozamalik2",
+    },
+    {
+      img: extension,
+      bg: "linear-gradient(135deg,#1a0a00,#3d1400)",
+      title: "GHL Theme Builder Expert",
+      desc: "Specialized in designing and building custom GoHighLevel themes with fully responsive layouts, modern UI design, and optimized performance for high-converting funnels and websites.",
+      stack: ["GHL", "Themes", "Funnels", "CSS", "UI Design"],
+      github: "https://github.com/shamrozamalik2",
+    },
   ];
 
   return (
-    <section id="projects" className="section" style={{ background:"var(--bg-secondary)" }}>
+    <section id="projects" className="section" style={{ background: "var(--bg-secondary)" }}>
       <div className="container">
         <div className="section-header reveal">
           <div className="section-label">Projects</div>
@@ -794,16 +914,24 @@ function Projects() {
 
         <div className="projects-grid">
           {projects.map((p, i) => (
-            <div key={p.title} className={`proj-card reveal d${(i%3)+1}`}>
+            <div key={p.title} className={`proj-card reveal d${(i % 3) + 1}`}>
               <div className="proj-img">
-                <div className="proj-placeholder" style={{ background: p.bg }}>
-                  <span style={{ filter:`drop-shadow(0 0 20px rgba(124,109,240,.6))` }}>{p.emoji}</span>
+                <div className="proj-placeholder">
+                  <img src={p.img} alt={p.title} className="proj-image" />
                 </div>
                 <div className="proj-overlay">
-                  <a href="#" className="btn btn-primary btn-sm">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setSelectedImage(p.img)}
+                  >
                     <i className="fa-solid fa-arrow-up-right-from-square"></i> Demo
-                  </a>
-                  <a href="#" className="btn btn-ghost btn-sm">
+                  </button>
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-ghost btn-sm"
+                  >
                     <i className="fa-brands fa-github"></i> Code
                   </a>
                 </div>
@@ -815,10 +943,18 @@ function Projects() {
                   {p.stack.map((s) => <span key={s} className="stack-tag">{s}</span>)}
                 </div>
                 <div className="proj-links">
-                  <a href="#" className="btn btn-primary btn-sm">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => setSelectedImage(p.img)}
+                  >
                     <i className="fa-solid fa-arrow-up-right-from-square"></i> Live Demo
-                  </a>
-                  <a href="#" className="btn btn-ghost btn-sm">
+                  </button>
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-ghost btn-sm"
+                  >
                     <i className="fa-brands fa-github"></i> GitHub
                   </a>
                 </div>
@@ -827,6 +963,22 @@ function Projects() {
           ))}
         </div>
       </div>
+      {selectedImage && (
+        <div className="modal-overlay" onClick={() => setSelectedImage(null)}>
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img src={selectedImage} alt="Project Preview" />
+            <button
+              className="close-btn"
+              onClick={() => setSelectedImage(null)}
+            >
+              ✖
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -834,28 +986,42 @@ function Projects() {
 /* ----- Services ----- */
 function Services() {
   const services = [
-    { icon:"fa-solid fa-plug",         color:"var(--accent-bright)", title:"API Integration",
-      desc:"Seamless integration of third-party APIs into your product ecosystem.",
-      items:["Payment gateways (Stripe, PayPal)","Social auth (Google, GitHub OAuth)","SMS & email (Twilio, SendGrid)","Cloud storage (AWS S3, Cloudinary)","Maps & geolocation APIs"] },
-    { icon:"fa-solid fa-server",        color:"var(--accent-bright)", title:"Backend Development",
-      desc:"Scalable, secure, and well-documented APIs that power any frontend.",
-      items:["RESTful & GraphQL API design","Auth & authorization (JWT, RBAC)","Database architecture & optimization","Microservices & modular structure","API docs with Swagger"] },
-    { icon:"fa-solid fa-robot",         color:"var(--accent-bright)", title:"Automation Solutions",
-      desc:"Automate repetitive workflows and business processes to save time.",
-      items:["Webhook pipelines & event-driven flows","Scheduled tasks & cron jobs","Data scraping & ETL pipelines","Email/notification automation","Bot development (Telegram, Discord)"] },
-    { icon:"fa-brands fa-react",        color:"#61dafb",              title:"Full-Stack Development",
-      desc:"Complete web apps from database to UI, built for performance.",
-      items:["MERN stack applications","Responsive UI with React","State management (Redux, Zustand)","Progressive Web Apps (PWA)","Deployment & CI/CD setup"] },
-    { icon:"fa-solid fa-shield-halved", color:"#4ade80",              title:"API Security & Optimisation",
-      desc:"Harden your API layer and squeeze every millisecond of performance.",
-      items:["Rate limiting & throttling","Input validation & sanitization","Caching with Redis","Query optimization","Security audit & hardening"] },
-    { icon:"fa-solid fa-chart-line",    color:"#f59e0b",              title:"Consulting & Code Review",
-      desc:"Fresh eyes on your codebase with actionable improvements.",
-      items:["Architecture review","Performance profiling","Code quality & best practices","Tech stack evaluation","Technical mentoring"] },
+    {
+      icon: "fa-solid fa-plug", color: "var(--accent-bright)", title: "API Integration",
+      desc: "Seamless integration of third-party APIs into your product ecosystem.",
+      items: ["Payment gateways (Stripe, PayPal)", "Social auth (Google, GitHub OAuth)", "SMS & email (Twilio, SendGrid)", "Cloud storage (AWS S3, Cloudinary)", "Maps & geolocation APIs"]
+    },
+    {
+      icon: "fa-solid fa-server", color: "var(--accent-bright)", title: "Backend Development",
+      desc: "Scalable, secure, and well-documented APIs that power any frontend.",
+      items: ["RESTful & GraphQL API design", "Auth & authorization (JWT, RBAC)", "Database architecture & optimization", "Microservices & modular structure", "API docs with Swagger"]
+    },
+    {
+      icon: "fa-brands fa-chrome", color: "#4285F4", title: "Chrome & Edge Extensions",
+      desc: "Custom browser extensions to automate workflows and enhance productivity.",
+      items: ["Chrome Extension Development", "Microsoft Edge Add-ons", "Automation Tools", "API Integration in Extensions", "Browser UI Customization"]
+    },
+    {
+      icon: "fa-brands fa-react", color: "#61dafb", title: "Full-Stack Development",
+      desc: "Complete web apps from database to UI, built for performance.",
+      items: ["MERN stack applications", "Responsive UI with React", "State management (Redux, Zustand)", "Progressive Web Apps (PWA)", "Deployment & CI/CD setup"]
+    },
+    {
+      icon: "fa-solid fa-gear", color: "#22c55e", title: "GoHighLevel (GHL) Expert",
+      desc: "Helping businesses automate and scale using GoHighLevel CRM solutions.",
+      items: ["GHL Funnel Setup", "Automation Workflows", "CRM Customization", "Lead Management", "Marketing Integrations"]
+    },
+
+    // ✅ REPLACED (Consulting → Custom Widgets)
+    {
+      icon: "fa-solid fa-puzzle-piece", color: "#f59e0b", title: "Custom Widgets & APIs",
+      desc: "Building reusable widgets and robust APIs tailored to your business needs.",
+      items: ["Reusable UI Widgets", "REST API Development", "Third-party Integrations", "Performance Optimization", "Custom Dashboards"]
+    },
   ];
 
   return (
-    <section id="services" className="section" style={{ background:"var(--bg-primary)" }}>
+    <section id="services" className="section" style={{ background: "var(--bg-primary)" }}>
       <div className="container">
         <div className="section-header reveal">
           <div className="section-label">Services</div>
@@ -865,7 +1031,7 @@ function Services() {
 
         <div className="services-grid">
           {services.map((s, i) => (
-            <div key={s.title} className={`svc-card reveal d${(i%3)+1}`}>
+            <div key={s.title} className={`svc-card reveal d${(i % 3) + 1}`}>
               <div className="svc-icon">
                 <i className={s.icon} style={{ color: s.color }}></i>
               </div>
@@ -884,32 +1050,55 @@ function Services() {
 
 /* ----- Contact ----- */
 function Contact() {
-  const [form, setForm]       = useState({ fname:"", lname:"", email:"", subject:"", message:"" });
+  const [form, setForm] = useState({ fname: "", lname: "", email: "", subject: "", message: "" });
   const [sending, setSending] = useState(false);
-  const [done, setDone]       = useState(false);
+  const [done, setDone] = useState(false);
+
+  const socials = [
+    {
+      icon: "fa-brands fa-linkedin-in",
+      label: "LinkedIn",
+      link: "https://www.linkedin.com/in/shamroza-malik-9781a8283/"
+    },
+    {
+      icon: "fa-brands fa-github",
+      label: "GitHub",
+      link: "https://github.com/shamrozamalik2"
+    },
+    // {
+    //   icon: "fa-brands fa-x-twitter",
+    //   label: "Twitter",
+    //   link: "#"
+    // },
+    // {
+    //   icon: "fa-brands fa-discord",
+    //   label: "Discord",
+    //   link: "#" // or invite link
+    // }
+  ];
 
   const change = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
- const submit = async (e) => {
-  e.preventDefault();
-  setSending(true);
-  try {
-    const res = await fetch("http://localhost:5000/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    const data = await res.json();
-    if (data.success) setDone(true);
-    else alert(data.error);
-  } catch {
-    alert("Something went wrong. Please try again.");
-  } finally {
-    setSending(false);
-  }
-};
+  const submit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    try {
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.success) setDone(true);
+      else alert(data.error);
+    } catch {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setSending(false);
+    }
+  };
   return (
-    <section id="contact" className="section" style={{ background:"var(--bg-secondary)" }}>
+    <section id="contact" className="section" style={{ background: "var(--bg-secondary)" }}>
       <div className="container">
         <div className="section-header reveal">
           <div className="section-label">Contact</div>
@@ -928,9 +1117,9 @@ function Contact() {
             </div>
 
             {[
-              { icon:"fa-solid fa-envelope",      label:"Email",         val:"shamrozamalik@email.com", href:"mailto:shamrozamalik@email.com" },
-              { icon:"fa-solid fa-location-dot",  label:"Location",      val:"Pakistan 🇵🇰 · Available Remotely" },
-              { icon:"fa-solid fa-clock",         label:"Response Time", val:"Usually within 24 hours" },
+              { icon: "fa-solid fa-envelope", label: "Email", val: "malikshamroza2@email.com", href: "mailto:malikshamroza2@email.com" },
+              { icon: "fa-solid fa-location-dot", label: "Location", val: "Pakistan 🇵🇰 · Available Remotely" },
+              { icon: "fa-solid fa-clock", label: "Response Time", val: "Usually within 24 hours" },
             ].map((it) => (
               <div key={it.label} className="c-item">
                 <div className="c-icon"><i className={it.icon}></i></div>
@@ -941,14 +1130,20 @@ function Contact() {
               </div>
             ))}
 
+
+
+
             <div className="social-links">
-              {[
-                { icon:"fa-brands fa-linkedin-in", label:"LinkedIn" },
-                { icon:"fa-brands fa-github",      label:"GitHub" },
-                { icon:"fa-brands fa-x-twitter",   label:"Twitter" },
-                { icon:"fa-brands fa-discord",     label:"Discord" },
-              ].map((s) => (
-                <a key={s.label} href="#" className="soc-link" aria-label={s.label} title={s.label}>
+              {socials.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="soc-link"
+                  aria-label={s.label}
+                  title={s.label}
+                >
                   <i className={s.icon}></i>
                 </a>
               ))}
@@ -983,7 +1178,7 @@ function Contact() {
                 <textarea name="message" value={form.message} onChange={change}
                   placeholder="Tell me about your project or idea..." required></textarea>
               </div>
-              <button type="submit" className="btn btn-primary" style={{ width:"100%" }} disabled={sending}>
+              <button type="submit" className="btn btn-primary" style={{ width: "100%" }} disabled={sending}>
                 {sending
                   ? <><i className="fa-solid fa-spinner fa-spin"></i> Sending...</>
                   : <><i className="fa-solid fa-paper-plane"></i> Send Message</>
@@ -1008,8 +1203,8 @@ function Footer() {
     <footer>
       <div className="container">
         <div className="foot-inner">
-          <span className="foot-logo">Shamroza Malik</span>
-          <p className="foot-copy">© {new Date().getFullYear()} Shamroza Malik · MERN Stack Developer</p>
+          <span className="foot-logo">Shamroza's Code</span>
+          <p className="foot-copy">© {new Date().getFullYear()} Shamroza Falak · MERN Stack Developer</p>
           <div className="foot-links">
             <a href="#about">About</a>
             <a href="#projects">Projects</a>
