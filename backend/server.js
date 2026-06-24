@@ -21,6 +21,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "http://localhost:3000",
+      "https://portfoliowebsitebackend-0zs7.onrender.com",
     ],
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
