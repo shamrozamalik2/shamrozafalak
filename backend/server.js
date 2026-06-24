@@ -4,11 +4,11 @@
 // ─────────────────────────────────────────────────────────────
 
 require("dotenv").config();
-const express    = require("express");
-const cors       = require("cors");
+const express = require("express");
+const cors = require("cors");
 const nodemailer = require("nodemailer");
 
-const app  = express();
+const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ── Middleware ────────────────────────────────────────────────
@@ -40,11 +40,12 @@ const transporter = nodemailer.createTransport({
 });
 
 // Verify connection once on startup
-transporter.verify((err) => {
+transporter.verify((err, success) => {
   if (err) {
-    console.error("❌  Gmail connection failed:", err.message);
+    console.error("❌ Gmail connection failed:", err);
   } else {
-    console.log("✅  Gmail transporter is ready");
+    console.log("✅ Gmail transporter is ready");
+    console.log(success);
   }
 });
 
@@ -131,7 +132,7 @@ app.post("/api/contact", async (req, res) => {
     // Send notification email to YOU
     await transporter.sendMail({
       from: `"Portfolio Contact" <${process.env.GMAIL_USER}>`,
-      to:   process.env.NOTIFY_EMAIL,
+      to: process.env.NOTIFY_EMAIL,
       replyTo: email,                          // clicking Reply goes to visitor
       subject: `📬 New message from ${fname}: ${subject || "(no subject)"}`,
       html: buildEmailHtml({ fname, lname, email, subject, message }),
@@ -140,7 +141,7 @@ app.post("/api/contact", async (req, res) => {
     // Optional: send a confirmation email to the visitor
     await transporter.sendMail({
       from: `"Shamroza Malik" <${process.env.GMAIL_USER}>`,
-      to:   email,
+      to: email,
       subject: "Got your message! I'll be in touch soon ✨",
       html: `
         <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:520px;margin:0 auto;background:#0a0a0f;border-radius:16px;overflow:hidden;border:1px solid rgba(124,109,240,0.3);padding:36px">
@@ -164,11 +165,14 @@ app.post("/api/contact", async (req, res) => {
       message: "Message sent! I'll get back to you soon.",
     });
 
-  } catch (err) {
-    console.error("❌  Email send error:", err.message);
+  }
+  catch (err) {
+    console.error("❌ FULL ERROR:", err);
+
     return res.status(500).json({
       success: false,
-      error: "Failed to send message. Please try again later.",
+      error: err.message,
+      code: err.code,
     });
   }
 });
@@ -176,6 +180,37 @@ app.post("/api/contact", async (req, res) => {
 // ── Health check ──────────────────────────────────────────────
 app.get("/", (req, res) => {
   res.json({ status: "ok", message: "Portfolio contact API is running." });
+});
+app.get("/env-check", (req, res) => {
+  res.json({
+    gmailUser: process.env.GMAIL_USER,
+    notifyEmail: process.env.NOTIFY_EMAIL,
+    hasPassword: !!process.env.GMAIL_APP_PASSWORD,
+  });
+});
+
+app.get("/test-email", async (req, res) => {
+  try {
+    const info = await transporter.sendMail({
+      from: process.env.GMAIL_USER,
+      to: process.env.GMAIL_USER,
+      subject: "Render Test",
+      text: "Testing email from Render",
+    });
+
+    res.json({
+      success: true,
+      messageId: info.messageId,
+    });
+  } catch (err) {
+    console.error("TEST EMAIL ERROR:", err);
+
+    res.status(500).json({
+      success: false,
+      error: err.message,
+      code: err.code,
+    });
+  }
 });
 
 // ── Start server ──────────────────────────────────────────────
