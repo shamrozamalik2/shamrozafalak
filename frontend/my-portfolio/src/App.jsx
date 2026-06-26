@@ -5,6 +5,14 @@ import customwidget from "../../../assets/StoreLocatorWidget.png";
 import ghlActions from "../../../assets/ghlactions.png";
 import automations from "../../../assets/automations.png";
 import customwebsites from "../../../assets/websites.jpg";
+import {
+  FaPuzzlePiece,
+  FaChrome,
+  FaCogs,
+  FaProjectDiagram,
+  FaLaptopCode,
+  FaFunnelDollar,
+} from "react-icons/fa";
 
 /* ============================================================
    GLOBAL STYLES
@@ -328,6 +336,24 @@ const GlobalStyles = () => (
       width:0; transition:width 1.2s cubic-bezier(.4,0,.2,1); }
 
     /* ---------- Projects ---------- */
+        .project-icon {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(170, 59, 255, 0.1);
+      color: #aa3bff;
+      margin: 11% auto 1.5rem;
+      transition: 0.3s ease;
+    }
+
+      .project-card:hover .project-icon {
+        transform: scale(1.1) rotate(5deg);
+        background: #aa3bff;
+        color: #fff;
+      }
     .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; }
     .proj-card { background:var(--bg-card); border:1px solid var(--border);
       border-radius:var(--radius); overflow:hidden; transition:all var(--transition);
@@ -581,7 +607,7 @@ function Navbar({ theme, toggleTheme }) {
   }, []);
 
   const close = () => { setMenuOpen(false); document.body.style.overflow = ""; };
-  const open  = () => { setMenuOpen(true);  document.body.style.overflow = "hidden"; };
+  const open = () => { setMenuOpen(true); document.body.style.overflow = "hidden"; };
 
   const links = ["about", "experience", "skills", "projects", "services", "contact"];
 
@@ -703,13 +729,13 @@ function Hero() {
 
 function About() {
   const stats = [
-    { n: "4+",  l: "Years of Experience" },
+    { n: "4+", l: "Years of Experience" },
     { n: "10+", l: "Projects Delivered" },
     { n: "30+", l: "API Integrations" },
-    { n: "3",   l: "Deployment Platforms" },
+    { n: "3", l: "Deployment Platforms" },
   ];
   const tags = [
-    "Node.js", "Express.js", "React.js", "MongoDB", "GoHighLevel",
+    "Node.js", "Express.js", "Next.js", "React.js", "TypeScript", "Vue.js", "Bootstrap", "TailwindCss", "MongoDB atlas", "GoHighLevel", 
     "OAuth 2.0", "Webhooks", "REST APIs", "WordPress", "Render / Vercel / Netlify",
   ];
 
@@ -720,23 +746,23 @@ function About() {
 
           <div className="reveal-left">
             <div className="about-card">
-              <div style={{ textAlign:"center", marginBottom:24 }}>
+              <div style={{ textAlign: "center", marginBottom: 24 }}>
                 <div style={{
-                  width:100, height:100, borderRadius:"50%",
-                  background:"linear-gradient(135deg,var(--accent-dim),var(--bg-secondary))",
-                  border:"3px solid var(--border)", display:"inline-flex",
-                  alignItems:"center", justifyContent:"center",
-                  fontFamily:"'Syne',sans-serif", fontSize:"2.2rem", fontWeight:800,
-                  color:"var(--accent-bright)"
+                  width: 100, height: 100, borderRadius: "50%",
+                  background: "linear-gradient(135deg,var(--accent-dim),var(--bg-secondary))",
+                  border: "3px solid var(--border)", display: "inline-flex",
+                  alignItems: "center", justifyContent: "center",
+                  fontFamily: "'Syne',sans-serif", fontSize: "2.2rem", fontWeight: 800,
+                  color: "var(--accent-bright)"
                 }}>SF</div>
               </div>
               <p style={{
-                textAlign:"center", color:"var(--text-muted)", fontSize:".82rem",
-                textTransform:"uppercase", letterSpacing:".1em", marginBottom:4
+                textAlign: "center", color: "var(--text-muted)", fontSize: ".82rem",
+                textTransform: "uppercase", letterSpacing: ".1em", marginBottom: 4
               }}>MERN Stack &amp; GHL Developer</p>
               <p style={{
-                textAlign:"center", color:"var(--accent-bright)", fontWeight:700,
-                fontSize:"1.1rem", fontFamily:"'Syne',sans-serif"
+                textAlign: "center", color: "var(--accent-bright)", fontWeight: 700,
+                fontSize: "1.1rem", fontFamily: "'Syne',sans-serif"
               }}>Shamroza Falak</p>
             </div>
 
@@ -778,7 +804,7 @@ function About() {
               {tags.map((t) => <span key={t} className="tag">{t}</span>)}
             </div>
 
-            <div style={{ marginTop:32, display:"flex", gap:12, flexWrap:"wrap" }}>
+            <div style={{ marginTop: 32, display: "flex", gap: 12, flexWrap: "wrap" }}>
               <a href="#contact" className="btn btn-primary">
                 <i className="fa-solid fa-paper-plane"></i> Hire Me
               </a>
@@ -872,7 +898,7 @@ function Experience() {
                 <span className="exp-period">{r.period}</span>
               </div>
               <p className="exp-company">
-                <i className="fa-solid fa-building" style={{ marginRight:6, fontSize:".8rem" }}></i>
+                <i className="fa-solid fa-building" style={{ marginRight: 6, fontSize: ".8rem" }}></i>
                 {r.company}
               </p>
               <ul className="exp-list">
@@ -883,7 +909,7 @@ function Experience() {
         </div>
 
         {/* Education */}
-        <div className="section-header reveal" style={{ marginTop:80 }}>
+        <div className="section-header reveal" style={{ marginTop: 80 }}>
           <div className="section-label">Education</div>
           <h2 className="section-title">Academic Background</h2>
         </div>
@@ -979,48 +1005,49 @@ function Projects() {
 
   const projects = [
     {
-      img: customwidget,
+      icon: FaPuzzlePiece,
       title: "Editable UI Widget",
       desc: "A customizable widget letting users modify content, colors, and layout in real time. Built for flexibility and embedded into client sites via a simple script tag.",
       stack: ["React.js", "Node.js", "MongoDB", "HTML/CSS/JS"],
       github: "https://github.com/shamrozamalik2",
     },
     {
-      img: extension,
+      icon: FaChrome,
       title: "Custom Chrome Extensions",
       desc: "Fully functional Chrome extensions for workflow automation, UI enhancements, and productivity tools — from manifest configuration to production publishing.",
       stack: ["JavaScript", "Chrome APIs", "HTML/CSS", "Node.js"],
       github: "https://github.com/shamrozamalik2",
     },
     {
-      img: ghlActions,
+      icon: FaCogs,
       title: "GHL Marketplace Apps",
       desc: "Production GHL marketplace apps with OAuth 2.0, HMAC-verified webhooks, custom workflow actions, auto-refreshing token lifecycle, and Winston logging.",
       stack: ["Node.js", "Express.js", "GHL API", "OAuth 2.0", "Webhooks"],
       github: "https://github.com/shamrozamalik2",
     },
     {
-      img: automations,
+      icon: FaProjectDiagram,
       title: "GHL Automation Workflows",
       desc: "Advanced automation inside GoHighLevel — triggers, campaigns, pipelines, and CRM workflows that reduce manual effort and improve lead conversion for clients.",
       stack: ["GoHighLevel", "CRM", "Automation", "Pipelines"],
       github: "https://github.com/shamrozamalik2",
     },
     {
-      img: customwebsites,
+      icon: FaLaptopCode,
       title: "Full-Stack Web Applications",
       desc: "End-to-end web apps built on the MERN stack — from MongoDB schema and Express API to React UI — deployed on cloud platforms with CI/CD pipelines.",
       stack: ["React", "Node.js", "MongoDB", "Render", "Vercel"],
       github: "https://github.com/shamrozamalik2",
     },
     {
-      img: extension,
+      icon: FaFunnelDollar,
       title: "GHL Theme & Funnel Builder",
       desc: "Custom GoHighLevel themes with responsive layouts, optimized for high-converting funnels. Includes CSS overrides, custom sections, and client-facing dashboards.",
       stack: ["GoHighLevel", "CSS", "Funnels", "UI Design"],
       github: "https://github.com/shamrozamalik2",
     },
   ];
+
 
   return (
     <section id="projects" className="section" style={{ background: "var(--bg-primary)" }}>
@@ -1034,38 +1061,45 @@ function Projects() {
         </div>
 
         <div className="projects-grid">
-          {projects.map((p, i) => (
-            <div key={p.title} className={`proj-card reveal d${(i % 3) + 1}`}>
-              <div className="proj-img">
-                <div className="proj-placeholder">
-                  <img src={p.img} alt={p.title} className="proj-image" />
+          {projects.map((p, i) => {
+            const Icon = p.icon;
+
+            return (
+              <div key={p.title} className={`proj-card reveal d${(i % 3) + 1}`}>
+                <div className="proj-img">
+                  <div className="proj-placeholder">
+                    <div className="project-icon">
+                      <Icon size={56} />
+                    </div>
+                  </div>
+
+                  <div className="proj-overlay">
+                    <a
+                      href={p.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-ghost btn-sm"
+                    >
+                      <i className="fa-brands fa-github"></i> Code
+                    </a>
+                  </div>
                 </div>
-                <div className="proj-overlay">
-                  <button className="btn btn-primary btn-sm" onClick={() => setSelectedImage(p.img)}>
-                    <i className="fa-solid fa-expand"></i> Preview
-                  </button>
-                  <a href={p.github} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm">
-                    <i className="fa-brands fa-github"></i> Code
-                  </a>
+
+                <div className="proj-body">
+                  <h3 className="proj-title">{p.title}</h3>
+                  <p className="proj-desc">{p.desc}</p>
+
+                  <div className="stack-wrap">
+                    {p.stack.map((s) => (
+                      <span key={s} className="stack-tag">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="proj-body">
-                <h3 className="proj-title">{p.title}</h3>
-                <p className="proj-desc">{p.desc}</p>
-                <div className="stack-wrap">
-                  {p.stack.map((s) => <span key={s} className="stack-tag">{s}</span>)}
-                </div>
-                <div className="proj-links">
-                  <button className="btn btn-primary btn-sm" onClick={() => setSelectedImage(p.img)}>
-                    <i className="fa-solid fa-expand"></i> Preview
-                  </button>
-                  <a href={p.github} target="_blank" rel="noopener noreferrer" className="btn btn-ghost btn-sm">
-                    <i className="fa-brands fa-github"></i> GitHub
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -1152,7 +1186,7 @@ function Contact() {
 
   const socials = [
     { icon: "fa-brands fa-linkedin-in", label: "LinkedIn", link: "https://www.linkedin.com/in/shamroza-malik-9781a8283/" },
-    { icon: "fa-brands fa-github",       label: "GitHub",   link: "https://github.com/shamrozamalik2" },
+    { icon: "fa-brands fa-github", label: "GitHub", link: "https://github.com/shamrozamalik2" },
   ];
 
   const change = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -1197,10 +1231,10 @@ function Contact() {
             </div>
 
             {[
-              { icon: "fa-solid fa-envelope",     label: "Email",         val: "malikshamroza2@gmail.com",            href: "mailto:malikshamroza2@gmail.com" },
-              { icon: "fa-solid fa-phone",         label: "Phone",         val: "+92 323 667 4108",                    href: "tel:+923236674108" },
-              { icon: "fa-solid fa-location-dot",  label: "Location",      val: "Madina Town, Faisalabad · Remote OK" },
-              { icon: "fa-solid fa-clock",          label: "Response Time", val: "Usually within 24 hours" },
+              { icon: "fa-solid fa-envelope", label: "Email", val: "malikshamroza2@gmail.com", href: "mailto:malikshamroza2@gmail.com" },
+              { icon: "fa-solid fa-phone", label: "Phone", val: "+92 323 667 4108", href: "tel:+923236674108" },
+              { icon: "fa-solid fa-location-dot", label: "Location", val: "Madina Town, Faisalabad · Remote OK" },
+              { icon: "fa-solid fa-clock", label: "Response Time", val: "Usually within 24 hours" },
             ].map((it) => (
               <div key={it.label} className="c-item">
                 <div className="c-icon"><i className={it.icon}></i></div>
@@ -1221,7 +1255,7 @@ function Contact() {
             </div>
           </div>
 
-          <div className="reveal">
+          {/* <div className="reveal">
             <form className="c-form" onSubmit={submit}>
               <div className="form-row2">
                 <div className="form-grp">
@@ -1248,7 +1282,7 @@ function Contact() {
                 <textarea name="message" value={form.message} onChange={change}
                   placeholder="Tell me about your project or what you're looking for..." required></textarea>
               </div>
-              <button type="submit" className="btn btn-primary" style={{ width:"100%" }} disabled={sending}>
+              <button type="submit" className="btn btn-primary" style={{ width: "100%" }} disabled={sending}>
                 {sending
                   ? <><i className="fa-solid fa-spinner fa-spin"></i> Sending...</>
                   : <><i className="fa-solid fa-paper-plane"></i> Send Message</>
@@ -1260,7 +1294,7 @@ function Contact() {
                 </div>
               )}
             </form>
-          </div>
+          </div> */}
 
         </div>
       </div>
