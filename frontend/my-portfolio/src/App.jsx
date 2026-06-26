@@ -5,6 +5,7 @@ import customwidget from "../../../assets/StoreLocatorWidget.png";
 import ghlActions from "../../../assets/ghlactions.png";
 import automations from "../../../assets/automations.png";
 import customwebsites from "../../../assets/websites.jpg";
+import shamroza from "../../../assets/shamroza.png";
 import {
   FaPuzzlePiece,
   FaChrome,
@@ -412,17 +413,62 @@ const GlobalStyles = () => (
       background:var(--accent); flex-shrink:0; }
 
     /* ---------- Contact ---------- */
-    .contact-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:60px; align-items:start; }
+    .contact-info {
+  text-align: center;
+  justify-self: start;   /* For CSS Grid */
+  align-self: start;
+}
+
+    .contact-grid { align-items:start; }
+
     .contact-info h3 { font-size:1.5rem; font-weight:700; margin-bottom:16px; }
     .contact-info p  { color:var(--text-secondary); font-size:.98rem; line-height:1.75; margin-bottom:32px; }
-    .c-item { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
-    .c-icon  { width:44px;height:44px; border-radius:12px; background:var(--accent-dim);
-      border:1px solid rgba(124,109,240,.2); display:flex; align-items:center;
-      justify-content:center; color:var(--accent-bright); font-size:1rem; flex-shrink:0; }
-    .c-text span { display:block; font-size:.78rem; color:var(--text-muted);
-      margin-bottom:2px; text-transform:uppercase; letter-spacing:.08em; }
-    .c-text a,.c-text p { color:var(--text-primary); font-size:.92rem; font-weight:500;
-      margin:0; transition:color var(--transition); }
+  .c-item {
+  display: flex;
+  align-items: flex-start;   /* Better for multi-line text */
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.c-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 12px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(124,109,240,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-bright);
+  font-size: 1rem;
+}
+.c-text {
+  text-align: left;
+}
+.c-text {
+  flex: 1;
+  min-width: 0;       /* Important for long text */
+}
+
+.c-text span {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.c-text a,
+.c-text p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
     .c-text a:hover { color:var(--accent-bright); }
     .social-links { display:flex; gap:10px; margin-top:28px; }
     .soc-link { width:44px;height:44px; border-radius:12px; background:var(--bg-card);
@@ -711,7 +757,7 @@ function Hero() {
             <div className="hero-img-ring"></div>
             <div className="hero-img-wrap">
               <img
-                src="https://i.postimg.cc/brVXYfPH/shamroza-removebg-preview.png"
+                src={shamroza}
                 alt="Shamroza Falak"
                 className="hero-photo"
               />
@@ -1231,8 +1277,8 @@ function Contact() {
             </div>
 
             {[
-              { icon: "fa-solid fa-envelope", label: "Email", val: "malikshamroza2@gmail.com", href: "mailto:malikshamroza2@gmail.com" },
-              { icon: "fa-solid fa-phone", label: "Phone", val: "+92 323 667 4108", href: "tel:+923236674108" },
+              { icon: "fa-solid fa-envelope", label: "Email", val: "shamrozascode@gmail.com", href: "mailto:shamrozascode@gmail.com" },
+              { icon: "fa-solid fa-phone", label: "Phone", val: "+92 3236641191", href: "tel:+923236641191" },
               { icon: "fa-solid fa-location-dot", label: "Location", val: "Madina Town, Faisalabad · Remote OK" },
               { icon: "fa-solid fa-clock", label: "Response Time", val: "Usually within 24 hours" },
             ].map((it) => (
